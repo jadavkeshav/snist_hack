@@ -27,7 +27,7 @@ const assignmentSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Teacher',
+    ref: 'User',
     required: true,
   },
   badge: {
@@ -77,7 +77,7 @@ const assignmentSchema = new mongoose.Schema({
     },
   },
 }, {
-  timestamps: true, // Automatically adds `createdAt` and `updatedAt` fields
+  timestamps: true,
 });
 
 const Assignment = mongoose.model('Assignment', assignmentSchema);

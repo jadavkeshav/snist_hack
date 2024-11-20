@@ -25,11 +25,12 @@ const articleSchema = new mongoose.Schema(
     }],
     published: {
       type: Boolean,
-      default: false,     
+      default: true,     
     },
     publishedAt: {
       type: Date,
-      default: null,      
+
+      default: Date.now(),      
     },
     views: {
       type: Number,
