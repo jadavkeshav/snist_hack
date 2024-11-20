@@ -8,6 +8,7 @@ import {
   fetchAssignmentsById,
   fetchAssignmentByStudentId,
   fetchAssignmentByInstId,
+  getAssignments,
 } from '../controllers/assignment.js';
 // import { fetchArticlesByInstId } from '../controllers/aritcles.js';
 
@@ -15,12 +16,13 @@ const router = express.Router();
 
 router.post('/create', createAssignment);
 
+router.get('/all', getAssignments);
+
 router.put('/update/:id', updateAssignment);
 
 router.delete('/delete/:id', deleteAssignment);
 
 router.post('/fetch', fetchAssignments);
-
 
 router.get('/:id', fetchAssignmentsById);
 
