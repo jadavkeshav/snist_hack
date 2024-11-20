@@ -4,9 +4,11 @@ import {
   updateAssignment,
   deleteAssignment,
   fetchAssignments,
-  fetchAssignmentById,
   fetchStudentStatuses,
+  fetchAssignmentsById,
+  fetchAssignmentByStudentId,
 } from '../controllers/assignment.js';
+import { fetchArticlesByInstId } from '../controllers/aritcles.js';
 
 const router = express.Router();
 
@@ -18,8 +20,13 @@ router.delete('/delete/:id', deleteAssignment);
 
 router.post('/fetch', fetchAssignments);
 
-router.get('/:id', fetchAssignmentById);
+router.get('/:id', fetchAssignmentsById);
 
 router.post('/statuses', fetchStudentStatuses);
+
+router.post('/get-inst', fetchArticlesByInstId);
+
+router.post('/get-student', fetchAssignmentByStudentId);
+
 
 export default router;
