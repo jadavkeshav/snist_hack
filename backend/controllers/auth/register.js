@@ -8,7 +8,7 @@ const register = ("/register", async (req, res) => {
     try {
         const { username, email, password , interest, role, institute} = req.body;
 
-        if (!username || !email || !password || !interest.length || !role || !institute) {
+        if (!username || !email || !password || !Array.isArray(interest) || interest.length === 0 || !role || !institute) {
             return res.status(400).json({ message: "Please enter all fields", success: false });
         }
 
