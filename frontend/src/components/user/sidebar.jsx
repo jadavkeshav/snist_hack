@@ -5,6 +5,7 @@ import { IoSettings } from 'react-icons/io5'
 import { FaUserGroup } from "react-icons/fa6";
 import LogoutButton from '../logout-button'
 import { FaBook, FaChalkboardTeacher } from "react-icons/fa";
+import { PiPathFill } from "react-icons/pi";
 
 const Sidebar = () => {
 
@@ -40,6 +41,12 @@ const Sidebar = () => {
             icon: <FaChalkboardTeacher />,
             link: "/dashboard/mentors",
             link2: "/dashboard/mentors/"
+        },
+        {
+            title: "Learning Path",
+            icon: <PiPathFill />,
+            link: "/dashboard/learning-path",
+            link2: "/dashboard/learning-path/"
         }
     ]
 

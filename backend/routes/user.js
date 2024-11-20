@@ -8,7 +8,7 @@ router.put('/update-avatar', updateAvatar);
 router.put('/update-email', updateEmail);
 router.put('/update-name', updateName);
 router.delete('/delete', deleteUser);
-router.get('/suggest-instructors', suggestInstructors);
+router.get('/suggest-instructors/:studentId', suggestInstructors);
 router.get('/leaderboard', getAllStudents);
 router.put('/update-coins', updateCoins);
 

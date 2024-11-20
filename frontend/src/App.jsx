@@ -14,6 +14,9 @@ import TutorAssignments from './pages/tutors/assignments'
 import TutorProfile from './pages/tutors/profile'
 import CreateAssignment from './pages/tutors/create-task'
 import CoursesPage from './pages/students/courses'
+import AssignmentPage from './pages/students/assignments'
+import MentorsPage from './pages/students/mentors'
+import LearningPath from './pages/students/learning-path'
 
 function App() {
   const { auth } = useAuth()
@@ -74,6 +77,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path='/dashboard/profile' element={<TutorProfile />} />
         <Route path='/dashboard/courses' element={<CoursesPage />} />
+        <Route path="/dashboard/assignments" element={<AssignmentPage />} />
+        <Route path="/dashboard/mentors" element={<MentorsPage />} />
+        <Route path='/dashboard/learning-path' element={<LearningPath />} />
         <Route path='/dashboard/community' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
         <Route path="*" element={<div className="flex h-screen bg-neutral-100 w-[calc(100%-18rem)] justify-center items-center">404 Not Found</div>} />
       </Routes>
