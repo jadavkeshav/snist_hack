@@ -1,5 +1,5 @@
 import express from 'express';
-import { updatePassword, updateAvatar, updateEmail, updateName, deleteUser, suggestInstructors, getAllStudents, updateCoins } from '../controllers/user.js';
+import { updatePassword, updateAvatar, updateEmail, updateName, deleteUser, suggestInstructors, getAllStudents,  getCoins } from '../controllers/user.js';
 import { getLearningPath } from '../controllers/tools.js';
 
 const router = express.Router();
@@ -11,7 +11,7 @@ router.put('/update-name', updateName);
 router.delete('/delete', deleteUser);
 router.get('/suggest-instructors/:studentId', suggestInstructors);
 router.get('/leaderboard', getAllStudents);
-router.put('/update-coins', updateCoins);
+router.put('/get-coins', getCoins);
 router.post('/path-generate/:studentId', getLearningPath);
 
 
