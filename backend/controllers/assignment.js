@@ -1,5 +1,5 @@
-import Assignment from "../models/assignment";
-import User from "../models/user";
+import Assignment from "../models/assignment.js";
+import User from "../models/user.js";
 
 export const createAssignment = async (req, res) => {
     try {
@@ -90,63 +90,134 @@ export const deleteAssignment = async (req, res) => {
     }
 };
 
-
+export const fetchAssignmentsById = async (req, res) => {
+    try {
+      const { assignmentId } = req.params;
+  
+      if (!assignmentId) {
+        return res.status(400).json({ message: "Assignment ID is required", success: false });
+      }
+  
+      // Fetch assignment by ID and populate fields
+      const assignment = await Assignment.findById(assignmentId)
+        .populate('createdBy', 'username email')
+        .populate('submissions.studentId', 'username email');
+  
+      if (!assignment) {
+        return res.status(404).json({ message: "Assignment not found", success: false });
+      }
+  
+      res.status(200).json({ success: true, data: assignment });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error", success: false });
+    }
+  };
 
 export const fetchAssignments = async (req, res) => {
     try {
-        const { userId, role } = req.body;
-
-        if (!userId || !role) {
-            return res.status(400).json({ message: "User ID and role are required", success: false });
-        }
-
-        if (role === 'inst') {
-            // Fetch assignments created by the instructor
-            const assignments = await Assignment.find({ createdBy: userId }).populate('submissions.studentId', 'username email');
-            return res.status(200).json({ success: true, data: assignments });
-        }
-
-        if (role === 'student') {
-            // Fetch assignments where the student is listed in submissions
-            const assignments = await Assignment.find({ 'submissions.studentId': userId });
-            return res.status(200).json({ success: true, data: assignments });
-        }
-
-        res.status(400).json({ message: "Invalid role", success: false });
+      const { userId, role } = req.body;
+  
+      if (!userId || !role) {
+        return res.status(400).json({ message: "User ID and role are required", success: false });
+      }
+  
+      if (role === 'inst') {
+        // Fetch assignments created by the instructor
+        const assignments = await Assignment.find({ createdBy: userId }).populate('submissions.studentId', 'username email');
+        return res.status(200).json({ success: true, data: assignments });
+      }
+  
+      if (role === 'student') {
+        // Fetch assignments where the student is listed in submissions
+        const assignments = await Assignment.find({ 'submissions.studentId': userId });
+        return res.status(200).json({ success: true, data: assignments });
+      }
+  
+      res.status(400).json({ message: "Invalid role", success: false });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error", success: false });
+      console.error(error);
+      res.status(500).json({ message: "Server error", success: false });
     }
-};
+  };
 
-export const fetchStudentStatuses = async (req, res) => {
+  export const fetchStudentStatuses = async (req, res) => {
     try {
-        const { assignmentId, instructorId } = req.body;
-
-        if (!assignmentId || !instructorId) {
-            return res.status(400).json({ message: "Assignment ID and instructor ID are required", success: false });
-        }
-
-        // Verify that the assignment belongs to the instructor
-        const assignment = await Assignment.findOne({ _id: assignmentId, createdBy: instructorId }).populate('submissions.studentId', 'username email');
-
-        if (!assignment) {
-            return res.status(404).json({ message: "Assignment not found or unauthorized", success: false });
-        }
-
-        const studentStatuses = assignment.submissions.map((submission) => ({
-            studentId: submission.studentId._id,
-            studentName: submission.studentId.username,
-            email: submission.studentId.email,
-            submissionStatus: submission.submissionStatus,
-            grade: submission.grade,
-            badgeEarned: submission.badgeEarned,
-            submissionDate: submission.submissionDate,
-        }));
-
-        res.status(200).json({ success: true, data: studentStatuses });
+      const { assignmentId, instructorId } = req.body;
+  
+      if (!assignmentId || !instructorId) {
+        return res.status(400).json({ message: "Assignment ID and instructor ID are required", success: false });
+      }
+  
+      // Verify that the assignment belongs to the instructor
+      const assignment = await Assignment.findOne({ _id: assignmentId, createdBy: instructorId }).populate('submissions.studentId', 'username email');
+  
+      if (!assignment) {
+        return res.status(404).json({ message: "Assignment not found or unauthorized", success: false });
+      }
+  
+      const studentStatuses = assignment.submissions.map((submission) => ({
+        studentId: submission.studentId._id,
+        studentName: submission.studentId.username,
+        email: submission.studentId.email,
+        submissionStatus: submission.submissionStatus,
+        grade: submission.grade,
+        badgeEarned: submission.badgeEarned,
+        submissionDate: submission.submissionDate,
+      }));
+  
+      res.status(200).json({ success: true, data: studentStatuses });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error", success: false });
+      console.error(error);
+      res.status(500).json({ message: "Server error", success: false });
     }
-};
+  };
+  
+  export const fetchAssignmentByInstId = async (req, res) => {
+    try {
+      const { instId } = req.body;
+  
+      if (!instId) {
+        return res.status(400).json({ message: "Instructor ID is required", success: false });
+      }
+  
+      // Fetch assignments created by the instructor
+      const assignments = await Assignment.find({ createdBy: instId });
+  
+      if (!assignments.length) {
+        return res.status(404).json({ message: "No assignments found for this instructor", success: false });
+      }
+  
+      res.status(200).json({ success: true, data: assignments });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error", success: false });
+    }
+  };
+
+  export const fetchAssignmentByStudentId = async (req, res) => {
+    try {
+      const { studentId } = req.body;
+  
+      if (!studentId) {
+        return res.status(400).json({ message: "Student ID is required", success: false });
+      }
+  
+      // Fetch assignments with submissions marked as "Completed" for the student
+      const assignments = await Assignment.find({
+        'submissions.studentId': studentId,
+        'submissions.submissionStatus': 'Completed'
+      });
+  
+      if (!assignments.length) {
+        return res.status(404).json({ message: "No completed assignments found for this student", success: false });
+      }
+  
+      res.status(200).json({ success: true, data: assignments });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error", success: false });
+    }
+  };
+
+  

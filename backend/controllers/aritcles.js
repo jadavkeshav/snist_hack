@@ -98,3 +98,24 @@ export const deleteArticle = async (req, res) => {
     }
 };
 
+export const fetchArticlesByInstId = async (req, res) => {
+    try {
+      const { instId } = req.body;
+  
+      if (!instId) {
+        return res.status(400).json({ message: "Instructor ID is required", success: false });
+      }
+  
+      // Fetch articles created by the instructor
+      const articles = await Article.find({ author: instId });
+  
+      if (!articles.length) {
+        return res.status(404).json({ message: "No articles found for this instructor", success: false });
+      }
+  
+      res.status(200).json({ success: true, data: articles });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error", success: false });
+    }
+  };

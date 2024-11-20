@@ -7,6 +7,7 @@ import connectDB from "./utils/db.js";
 import cors from "cors"
 import articles from "./routes/articles.js"
 import assignments from "./routes/assignment.js"
+import community from "./routes/community.js"
 
 dotenv.config();
 
@@ -24,6 +25,8 @@ app.use("/api/auth", auth);
 app.use("/api/user", user);
 app.use("/api/article", articles);
 app.use("/api/assignment", assignments);
+app.use('/api/community', community);
+
 
 
 app.listen(process.env.PORT, () => {
