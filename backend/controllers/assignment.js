@@ -263,7 +263,7 @@ export const submitAssignment = async (req, res) => {
 
 
         // Validate input
-        if (!assignmentId || !studentId || typeof coins !== "number") {
+        if (!assignmentId || !studentId ) {
             return res.status(400).json({
                 message: "Assignment ID, Student ID, and coins are required",
                 success: false,
