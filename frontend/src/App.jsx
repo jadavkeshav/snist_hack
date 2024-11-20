@@ -18,6 +18,7 @@ import LearningPath from './pages/students/learning-path'
 import TaskPage from './pages/students/task'
 import Leaderboard from './pages/leaderboard'
 import CoursePage from './pages/students/CoursePage'
+import StartAssignment from './pages/students/start'
 
 function App() {
   const { auth } = useAuth()
@@ -59,6 +60,7 @@ function App() {
           <Route path='/dashboard' element={<Leaderboard />} />
           <Route path='/dashboard/community' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
           <Route path='/dashboard/assignments' element={<TutorAssignments />} />
+          <Route path='/dashboard/store' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
           <Route path='/dashboard/courses' element={<Courses />} />
           <Route path='/dashboard/create-course' element={<CreateCourse />} />
           <Route path='/dashboard/profile' element={<TutorProfile />} />
@@ -82,7 +84,9 @@ function App() {
         <Route path="/dashboard/assignments" element={<AssignmentPage />} />
         <Route path="/dashboard/assignments/:taskId" element={<TaskPage />} />
         <Route path="/dashboard/mentors" element={<MentorsPage />} />
+        <Route path='/dashboard/store' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
         <Route path='/dashboard/learning-path' element={<LearningPath />} />
+        <Route path="/dashboard/assignments/:taskId/start" element={<StartAssignment />} />
         <Route path='/dashboard/community' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
         <Route path="*" element={<div className="flex h-screen bg-neutral-100 w-[calc(100%-18rem)] justify-center items-center">404 Not Found</div>} />
       </Routes>

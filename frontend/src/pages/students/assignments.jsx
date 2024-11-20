@@ -67,12 +67,6 @@ const AssignmentCard = ({ assignment }) => {
       shadow="md"
     >
       <div className="flex justify-between items-center mb-4">
-        <Badge 
-          color={assignment.status === "Pending" ? "warning" : "success"}
-          variant="flat"
-        >
-          {assignment.status}
-        </Badge>
         <div className="flex items-center text-gray-500 text-sm">
           <CgCalendar className="w-4 h-4 mr-2" />
           {new Date(assignment.createdAt).toLocaleDateString()}

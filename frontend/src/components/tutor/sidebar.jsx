@@ -19,12 +19,6 @@ const TutorSidebar = () => {
             link2: "/dashboard/"
         },
         {
-            title: "Community",
-            icon: <FaUserGroup />,
-            link: "/dashboard/community",
-            link2: "/dashboard/community/"
-        },
-        {
             title: "Assignments",
             icon: <MdExplore />,
             link: "/dashboard/assignments",
@@ -47,6 +41,18 @@ const TutorSidebar = () => {
             icon: <FaPenSquare />,
             link: "/dashboard/create-task",
             link2: "/dashboard/create-task/"
+        },
+        {
+            title: "Community",
+            icon: <FaUserGroup />,
+            link: "/dashboard/community",
+            link2: "/dashboard/community/"
+        },
+        {
+            title: "Store(CTX)",
+            icon: <FaStore />,
+            link: "/dashboard/store",
+            link2: "/dashboard/store/"
         }
     ]
 
@@ -55,7 +61,7 @@ const TutorSidebar = () => {
             <div className="w-full h-full space-y-4">
                 <Link to="/" className="flex items-center space-x-2">
                     <div className="flex items-center space-x-2">
-                        <img src={Logo} alt="Logo" className="w-12 h-12" />
+                        <img src={Logo} alt="Logo" className="w-14 h-14" />
                         <h1 className="text-3xl font-bold text-center text-blue-500">
                           BrainQuest
                         </h1>

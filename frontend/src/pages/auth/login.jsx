@@ -43,8 +43,8 @@ const LoginPage = () => {
       <div className="h-screen flex justify-center items-center">
           <Card className="lg:w-1/3 w-1/2 px-8 py-6">
               <CardHeader className="flex justify-center items-center space-x-2">
-                  <img src={Logo} alt="Logo" className="w-8 h-8" />
-                  <h1 className="text-3xl font-bold text-center text-blue-500">
+              <img src={Logo} alt="Logo" className="w-14 h-14" />
+              <h1 className="text-3xl font-bold text-center text-blue-500">
                       BrainQuest
                   </h1>
               </CardHeader>
