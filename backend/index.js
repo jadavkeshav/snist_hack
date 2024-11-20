@@ -6,6 +6,7 @@ import auth from "./routes/auth.js"
 import connectDB from "./utils/db.js";
 import cors from "cors"
 import articles from "./routes/articles.js"
+import assignments from "./routes/assignment.js"
 
 dotenv.config();
 
@@ -21,7 +22,9 @@ app.use(cors());
 
 app.use("/api/auth", auth);
 app.use("/api/user", user);
-app.use("/api/article", articles)
+app.use("/api/article", articles);
+app.use("/api/assignment", assignments);
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server Running on PORT => ${process.env.PORT}`)
