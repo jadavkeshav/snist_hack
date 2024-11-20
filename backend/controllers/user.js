@@ -122,3 +122,74 @@ export const suggestInstructors = async (req, res) => {
     res.status(500).json({ message: "Server error", success: false });
   }
 };
+
+export const getAllStudents = async (req, res) => {
+  try {
+    // Fetch students and sort by coins in descending order
+    const students = await User.find({ role: 'student' }).sort({ coins: -1 });
+
+    // If students are found, send them as a response
+    if (students.length > 0) {
+      return res.status(200).json({
+        success: true,
+        data: students,
+      });
+    } else {
+      // If no students found
+      return res.status(404).json({
+        success: false,
+        message: 'No students found.',
+      });
+    }
+  } catch (error) {
+    // If any error occurs, return an error response
+    console.error("Error fetching students:", error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
+  }
+};
+
+export const updateCoins = async (req, res) => {
+  const { userId, coins } = req.body;
+
+  // Check if the coins value is valid (e.g., a number)
+  if (typeof coins !== 'number' || coins < 0) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid coins value. It must be a positive number.',
+    });
+  }
+
+  try {
+    // Find the user by ID and update the coins
+    const user = await User.findById(userId);
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found.',
+      });
+    }
+
+    // Update the user's coins
+    user.coins = user.coins+coins;
+
+    // Save the updated user
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Coins updated successfully.',
+      data: user,
+    });
+  } catch (error) {
+    console.error("Error updating coins:", error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
+  }
+};
