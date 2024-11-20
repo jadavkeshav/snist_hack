@@ -78,7 +78,7 @@ export const getAssignmentById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const assignment = await Assignment.findById(id).populate('createdBy', 'username email');
+        const assignment = await Assignment.findById(id)
 
         if (!assignment) {
             return res.status(404).json({ message: "Assignment not found", success: false });
@@ -136,8 +136,6 @@ export const fetchAssignmentsById = async (req, res) => {
   
       // Fetch assignment by ID and populate fields
       const assignment = await Assignment.findById(assignmentId)
-        .populate('createdBy', 'username email')
-        .populate('submissions.studentId', 'username email');
   
       if (!assignment) {
         return res.status(404).json({ message: "Assignment not found", success: false });
@@ -160,7 +158,7 @@ export const fetchAssignments = async (req, res) => {
   
       if (role === 'inst') {
         // Fetch assignments created by the instructor
-        const assignments = await Assignment.find({ createdBy: userId }).populate('submissions.studentId', 'username email');
+        const assignments = await Assignment.find({ createdBy: userId })
         return res.status(200).json({ success: true, data: assignments });
       }
   
@@ -186,7 +184,7 @@ export const fetchAssignments = async (req, res) => {
       }
   
       // Verify that the assignment belongs to the instructor
-      const assignment = await Assignment.findOne({ _id: assignmentId, createdBy: instructorId }).populate('submissions.studentId', 'username email');
+      const assignment = await Assignment.findOne({ _id: assignmentId, createdBy: instructorId })
   
       if (!assignment) {
         return res.status(404).json({ message: "Assignment not found or unauthorized", success: false });
@@ -256,19 +254,9 @@ export const fetchAssignments = async (req, res) => {
     }
   };
 
-
-export const submitAssignment = async (req, res) => {
+  export const submitAssignment = async (req, res) => {
     try {
         const { assignmentId, studentId, grade } = req.body;
-
-
-        // Validate input
-        if (!assignmentId || !studentId ) {
-            return res.status(400).json({
-                message: "Assignment ID, Student ID, and coins are required",
-                success: false,
-            });
-        }
 
         // Find the assignment
         const assignment = await Assignment.findById(assignmentId);
@@ -280,24 +268,24 @@ export const submitAssignment = async (req, res) => {
         }
 
         // Check if the student has already submitted
-        const existingSubmission = assignment.submissions.find(
+        const existingSubmissionIndex = assignment.submissions.findIndex(
             (submission) => submission.studentId.toString() === studentId
         );
 
-        if (existingSubmission) {
-            return res.status(400).json({
-                message: "Assignment already submitted",
-                success: false,
+        if (existingSubmissionIndex !== -1) {
+            // Update existing submission
+            assignment.submissions[existingSubmissionIndex].submissionStatus = "Submitted";
+            assignment.submissions[existingSubmissionIndex].grade = grade;
+            assignment.submissions[existingSubmissionIndex].submissionDate = new Date();
+        } else {
+            // Add new submission
+            assignment.submissions.push({
+                studentId,
+                submissionStatus: "Submitted",
+                grade: grade,
+                submissionDate: new Date(),
             });
         }
-
-        // Add the student's submission
-        assignment.submissions.push({
-            studentId,
-            submissionStatus: "Submitted",
-            grade: grade || null,
-            submissionDate: new Date(),
-        });
 
         await assignment.save();
 
@@ -310,7 +298,8 @@ export const submitAssignment = async (req, res) => {
             });
         }
 
-        student.coins = (student.coins || 0) + grade;
+        // Add a fixed amount of coins for submission, or the calculated grade
+        student.coins = (student.coins || 0) + (grade || 10);
         await student.save();
 
         res.status(200).json({
