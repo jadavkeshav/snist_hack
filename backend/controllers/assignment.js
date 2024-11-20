@@ -255,3 +255,74 @@ export const fetchAssignments = async (req, res) => {
       res.status(500).json({ message: "Server error", success: false });
     }
   };
+
+
+export const submitAssignment = async (req, res) => {
+    try {
+        const { assignmentId, studentId, grade } = req.body;
+
+
+        // Validate input
+        if (!assignmentId || !studentId || typeof coins !== "number") {
+            return res.status(400).json({
+                message: "Assignment ID, Student ID, and coins are required",
+                success: false,
+            });
+        }
+
+        // Find the assignment
+        const assignment = await Assignment.findById(assignmentId);
+        if (!assignment) {
+            return res.status(404).json({
+                message: "Assignment not found",
+                success: false,
+            });
+        }
+
+        // Check if the student has already submitted
+        const existingSubmission = assignment.submissions.find(
+            (submission) => submission.studentId.toString() === studentId
+        );
+
+        if (existingSubmission) {
+            return res.status(400).json({
+                message: "Assignment already submitted",
+                success: false,
+            });
+        }
+
+        // Add the student's submission
+        assignment.submissions.push({
+            studentId,
+            submissionStatus: "Submitted",
+            grade: grade || null,
+            submissionDate: new Date(),
+        });
+
+        await assignment.save();
+
+        // Update student's coin balance
+        const student = await User.findById(studentId);
+        if (!student) {
+            return res.status(404).json({
+                message: "Student not found",
+                success: false,
+            });
+        }
+
+        student.coins = (student.coins || 0) + grade;
+        await student.save();
+
+        res.status(200).json({
+            message: "Assignment submitted successfully",
+            success: true,
+            data: { assignment, updatedCoins: student.coins },
+        });
+    } catch (error) {
+        console.error("Error submitting assignment:", error);
+        res.status(500).json({
+            message: "Server error",
+            success: false,
+        });
+    }
+};

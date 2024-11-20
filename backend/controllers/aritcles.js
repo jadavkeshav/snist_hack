@@ -41,7 +41,7 @@ export const getArticleById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const article = await Article.findOne({_id: id, published: true}).populate('author', 'username email');
+        const article = await Article.findOne({_id: id, published: true});
 
         if (!article) {
             return res.status(404).json({ message: 'Article not found', success: false });

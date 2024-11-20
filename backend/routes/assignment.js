@@ -9,6 +9,7 @@ import {
   fetchAssignmentByStudentId,
   fetchAssignmentByInstId,
   getAssignments,
+  submitAssignment,
 } from '../controllers/assignment.js';
 // import { fetchArticlesByInstId } from '../controllers/aritcles.js';
 
@@ -24,13 +25,15 @@ router.delete('/delete/:id', deleteAssignment);
 
 router.post('/fetch', fetchAssignments);
 
-router.get('/:id', fetchAssignmentsById);
+router.get('/:assignmentId', fetchAssignmentsById);
 
 router.post('/statuses', fetchStudentStatuses);
 
 router.post('/get-inst-assign', fetchAssignmentByInstId);
 
 router.post('/get-student', fetchAssignmentByStudentId);
+
+router.post('/submit', submitAssignment);
 
 
 export default router;

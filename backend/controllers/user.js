@@ -151,22 +151,14 @@ export const getAllStudents = async (req, res) => {
   }
 };
 
-export const updateCoins = async (req, res) => {
-  const { userId, coins } = req.body;
 
-  // Check if the coins value is valid (e.g., a number)
-  if (typeof coins !== 'number' || coins < 0) {
-    return res.status(400).json({
-      success: false,
-      message: 'Invalid coins value. It must be a positive number.',
-    });
-  }
+
+export const getCoins = async (req, res) => {
+  const { userId } = req.body;
 
   try {
-    // Find the user by ID and update the coins
     const user = await User.findById(userId);
 
-    // Check if user exists
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -174,19 +166,13 @@ export const updateCoins = async (req, res) => {
       });
     }
 
-    // Update the user's coins
-    user.coins = user.coins+coins;
-
-    // Save the updated user
-    await user.save();
-
     return res.status(200).json({
       success: true,
-      message: 'Coins updated successfully.',
-      data: user,
+      message: "Users Coins",
+      data: user.coins,
     });
   } catch (error) {
-    console.error("Error updating coins:", error);
+    console.error("Error getting coins:", error);
     return res.status(500).json({
       success: false,
       message: 'Server Error',
