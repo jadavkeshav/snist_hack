@@ -66,7 +66,7 @@ export const createAssignment = async (req, res) => {
 
 export const getAssignments = async (req, res) => {
     try {
-        const assignments = await Assignment.find().populate('createdBy', 'username email');
+        const assignments = await Assignment.find();
         res.status(200).json({ success: true, data: assignments });
     } catch (error) {
         console.error(error);
