@@ -35,10 +35,10 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type: String,
+        enum: ['student', 'inst'],
         default: 'student',
         lowercase: true
     },
-    // TODO: Add token and token expiration fields to the user schema
     token: {
         type: String,
         default: "",
@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: new Date(),
     },
-    intrest:[{
+    interest:[{
         type: String,
         required: [true, "Atlease one of intreset is required"],
         lowercase: true
@@ -56,6 +56,9 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    badge:[{
+        type: String
+    }]
 }, {
     timestamps: true,
 });
