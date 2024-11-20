@@ -17,6 +17,7 @@ import CoursesPage from './pages/students/courses'
 import AssignmentPage from './pages/students/assignments'
 import MentorsPage from './pages/students/mentors'
 import LearningPath from './pages/students/learning-path'
+import TaskPage from './pages/students/task'
 
 function App() {
   const { auth } = useAuth()
@@ -79,6 +80,7 @@ function App() {
         <Route path='/dashboard/profile' element={<TutorProfile />} />
         <Route path='/dashboard/courses' element={<CoursesPage />} />
         <Route path="/dashboard/assignments" element={<AssignmentPage />} />
+        <Route path="/dashboard/assignments/:taskId" element={<TaskPage />} />
         <Route path="/dashboard/mentors" element={<MentorsPage />} />
         <Route path='/dashboard/learning-path' element={<LearningPath />} />
         <Route path='/dashboard/community' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
