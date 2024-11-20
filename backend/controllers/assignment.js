@@ -19,6 +19,8 @@ export const createAssignment = async (req, res) => {
             quiz,
         });
 
+        console.log(assignment)
+
         await assignment.save();
         res.status(201).json({ message: "Assignment created successfully", success: true, data: assignment });
     } catch (error) {
