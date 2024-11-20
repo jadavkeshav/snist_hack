@@ -57,7 +57,7 @@ const TutorSidebar = () => {
     ]
 
     return (
-        <div className="h-full flex flex-col bg-white shadow-lg w-[18rem] justify-between px-4 py-6">
+        <div className="h-full flex flex-col bg-white shadow-lg w-[18rem] justify-between px-4 py-6 sticky top-0 left-0">
             <div className="w-full h-full space-y-4">
                 <Link to="/" className="flex items-center space-x-2">
                     <div className="flex items-center space-x-2">

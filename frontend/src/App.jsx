@@ -70,8 +70,9 @@ function App() {
   }
   
   return (
-    <div className="h-screen bg-neutral-100 flex">
+    <div className="h-screen flex">
       <UserSidebar />
+      <div className='ml-[18rem] w-full'>
       <Routes>
         {/* Add other user routes here */}
         <Route path="/dashboard" element={<Dashboard />} />
@@ -83,6 +84,7 @@ function App() {
         <Route path='/dashboard/community' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
         <Route path="*" element={<div className="flex h-screen bg-neutral-100 w-[calc(100%-18rem)] justify-center items-center">404 Not Found</div>} />
       </Routes>
+      </div>
     </div>
   )
 }
