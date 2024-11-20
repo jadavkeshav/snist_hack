@@ -5,8 +5,6 @@ import LandingPage from './pages/landing'
 import LoginPage from './pages/auth/login'
 import RegisterPage from './pages/auth/register'
 import UserSidebar from './components/user/sidebar'
-import Dashboard from './pages/students/dashboard'
-import TutorDashboard from './pages/tutors/dashboard'
 import TutorSidebar from './components/tutor/sidebar'
 import CreateCourse from './pages/tutors/create'
 import Courses from './pages/tutors/courses'
@@ -18,6 +16,7 @@ import AssignmentPage from './pages/students/assignments'
 import MentorsPage from './pages/students/mentors'
 import LearningPath from './pages/students/learning-path'
 import TaskPage from './pages/students/task'
+import Leaderboard from './pages/leaderboard'
 import CoursePage from './pages/students/CoursePage'
 
 function App() {
@@ -57,12 +56,11 @@ function App() {
       <div className="h-screen bg-neutral-100 flex">
         <TutorSidebar />
         <Routes>
-          <Route path='/dashboard' element={<TutorDashboard />} />
+          <Route path='/dashboard' element={<Leaderboard />} />
           <Route path='/dashboard/community' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
           <Route path='/dashboard/assignments' element={<TutorAssignments />} />
           <Route path='/dashboard/courses' element={<Courses />} />
           <Route path='/dashboard/create-course' element={<CreateCourse />} />
-          <Route path='/dashboard/leaderboard' element={<div>Leaderboard</div>} />
           <Route path='/dashboard/profile' element={<TutorProfile />} />
           <Route path="/dashboard/create-task" element={<CreateAssignment />} />
           <Route path="*" element={<div className="flex h-screen bg-neutral-100 w-[calc(100%-18rem)] justify-center items-center">404 Not Found</div>} />
@@ -77,10 +75,10 @@ function App() {
       <div className='ml-[18rem] w-full'>
       <Routes>
         {/* Add other user routes here */}
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Leaderboard />} />
         <Route path='/dashboard/profile' element={<TutorProfile />} />
         <Route path='/dashboard/courses' element={<CoursesPage />} />
-        <Route path="/dashboard/courses/:id" element={<CoursePage />} />
+        <Route path='/dashboard/courses/:id' element={<CoursePage />} />
         <Route path="/dashboard/assignments" element={<AssignmentPage />} />
         <Route path="/dashboard/assignments/:taskId" element={<TaskPage />} />
         <Route path="/dashboard/mentors" element={<MentorsPage />} />

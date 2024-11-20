@@ -6,17 +6,18 @@ import { IoDocumentAttach } from "react-icons/io5";
 import { FaStar } from "react-icons/fa6";
 import { CgCap, CgLock } from "react-icons/cg";
 
-// TODO: fetch
-const AssignmentDetail = () => {
-  const { assignmentId } = useParams();
+const TaskPage = () => {
+  const { taskId } = useParams(); // Changed from assignmentId to taskId
   const [assignment, setAssignment] = useState(null);
   const [loading, setLoading] = useState(true);
+  
+  console.log(taskId) // Updated console log
 
   useEffect(() => {
     const fetchAssignment = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/assignment/${assignmentId}`
+          `${import.meta.env.VITE_API_URL}/assignment/${taskId}`
         );
         console.log(response.data)
         setAssignment(response.data.data);
@@ -28,7 +29,7 @@ const AssignmentDetail = () => {
     };
 
     fetchAssignment();
-  }, [assignmentId]);
+  }, [taskId]); // Updated dependency to taskId
 
   if (loading) {
     return (
@@ -123,4 +124,4 @@ const AssignmentDetail = () => {
   );
 };
 
-export default AssignmentDetail;
+export default TaskPage;

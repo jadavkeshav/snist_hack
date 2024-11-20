@@ -13,8 +13,8 @@ const TutorSidebar = () => {
 
     const sidebarItems = [
         {
-            title: "Dashboard",
-            icon: <MdSpaceDashboard />,
+            title: "Leaderboard",
+            icon: <MdLeaderboard />,
             link: "/dashboard",
             link2: "/dashboard/"
         },
@@ -35,12 +35,6 @@ const TutorSidebar = () => {
             icon: <FaBook />,
             link: "/dashboard/courses",
             link2: "/dashboard/courses/"
-        },
-        {
-            title: "Leaderboard",
-            icon: <MdLeaderboard />,
-            link: "/dashboard/leaderboard",
-            link2: "/dashboard/leaderboard/"
         },
         {
             title: "Create Course",

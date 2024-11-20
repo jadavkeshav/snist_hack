@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/logo.svg'
-import { MdExplore, MdSpaceDashboard } from 'react-icons/md'
+import { MdExplore, MdLeaderboard, MdSpaceDashboard } from 'react-icons/md'
 import { IoSettings } from 'react-icons/io5'
 import { FaUserGroup } from "react-icons/fa6";
 import LogoutButton from '../logout-button'
@@ -13,8 +13,8 @@ const Sidebar = () => {
 
     const sidebarItems = [
         {
-            title: "Dashboard",
-            icon: <MdSpaceDashboard />,
+            title: "Leaderboard",
+            icon: <MdLeaderboard />,
             link: "/dashboard",
             link2: "/dashboard/"
         },
