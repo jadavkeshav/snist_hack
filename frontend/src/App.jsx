@@ -4,10 +4,22 @@ import useAuth from "./hooks/use-auth"
 import LandingPage from './pages/landing'
 import LoginPage from './pages/auth/login'
 import RegisterPage from './pages/auth/register'
+import UserSidebar from './components/user/sidebar'
+import Dashboard from './pages/students/dashboard'
+import TutorDashboard from './pages/tutors/dashboard'
+import TutorSidebar from './components/tutor/sidebar'
+import CreateCourse from './pages/tutors/create'
+import Courses from './pages/tutors/courses'
+import TutorAssignments from './pages/tutors/assignments'
+import TutorProfile from './pages/tutors/profile'
+import CreateAssignment from './pages/tutors/create-task'
+import CoursesPage from './pages/students/courses'
 
 function App() {
   const { auth } = useAuth()
   const navigate = useNavigate()
+
+  const { user } = auth;
 
   useEffect(() => {
     if (auth.token) {
@@ -35,23 +47,35 @@ function App() {
   }
 
   // Routes for admin users
-  if (auth.token.role === "admin") {
+  if (user.role === "inst") {
     return (
       <div className="h-screen bg-neutral-100 flex">
+        <TutorSidebar />
         <Routes>
-          {/* Add other admin routes here */}
-          <Route path="*" element={<div className="flex h-screen bg-neutral-100 w-full">404 Not Found</div>} />
-        </Routes>
+          <Route path='/dashboard' element={<TutorDashboard />} />
+          <Route path='/dashboard/community' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
+          <Route path='/dashboard/assignments' element={<TutorAssignments />} />
+          <Route path='/dashboard/courses' element={<Courses />} />
+          <Route path='/dashboard/create-course' element={<CreateCourse />} />
+          <Route path='/dashboard/leaderboard' element={<div>Leaderboard</div>} />
+          <Route path='/dashboard/profile' element={<TutorProfile />} />
+          <Route path="/dashboard/create-task" element={<CreateAssignment />} />
+          <Route path="*" element={<div className="flex h-screen bg-neutral-100 w-[calc(100%-18rem)] justify-center items-center">404 Not Found</div>} />
+          </Routes>
       </div>
     )
   }
   
-  // Routes for regular authenticated users
   return (
     <div className="h-screen bg-neutral-100 flex">
+      <UserSidebar />
       <Routes>
         {/* Add other user routes here */}
-        <Route path="*" element={<div className="flex h-screen bg-neutral-100 w-full">404 Not Found</div>} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path='/dashboard/profile' element={<TutorProfile />} />
+        <Route path='/dashboard/courses' element={<CoursesPage />} />
+        <Route path='/dashboard/community' element={<div className="h-screen w-full flex flex-col text-xl font-semibold items-center justify-center">Under Development 🧑‍💻</div>} />
+        <Route path="*" element={<div className="flex h-screen bg-neutral-100 w-[calc(100%-18rem)] justify-center items-center">404 Not Found</div>} />
       </Routes>
     </div>
   )

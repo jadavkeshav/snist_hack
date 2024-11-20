@@ -28,7 +28,7 @@ export const createArticle = async (req, res) => {
 
 export const getAllArticles = async (req, res) => {
     try {
-        const articles = await Article.find({published: true}).populate('author', 'username email');
+        const articles = await Article.find({published: true})
         res.status(200).json({ success: true, data: articles });
     } catch (error) {
         console.error(error);

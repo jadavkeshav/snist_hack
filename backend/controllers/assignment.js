@@ -5,26 +5,60 @@ export const createAssignment = async (req, res) => {
     try {
         const { title, description, topic, maxMarks, createdBy, badge, quiz } = req.body;
 
+        console.log(req.body);
+
+        // Check for required fields
         if (!title || !description || !topic || !maxMarks || !createdBy) {
             return res.status(400).json({ message: "All fields are required", success: false });
         }
 
-        const assignment = new Assignment({
+        // Validate `quiz` structure, if provided
+        if (quiz) {
+            if (!Array.isArray(quiz.questions) || quiz.questions.length === 0) {
+                return res.status(400).json({
+                    message: "Quiz must include a valid 'questions' array with at least one question.",
+                    success: false,
+                });
+            }
+
+            // Validate each question
+            for (const question of quiz.questions) {
+                if (
+                    !question.questionText ||
+                    !Array.isArray(question.options) ||
+                    question.options.length === 0 ||
+                    typeof question.correctOption !== "number"
+                ) {
+                    return res.status(400).json({
+                        message: "Each question must have 'questionText', non-empty 'options', and a 'correctOption' (index).",
+                        success: false,
+                    });
+                }
+            }
+        }
+
+        // Prepare assignment object
+        const assignmentData = {
             title,
             description,
             topic,
-            maxMarks,
+            maxMarks: parseInt(maxMarks, 10), // Ensure `maxMarks` is a number
             createdBy,
             badge,
-            quiz,
-        });
+            quiz: quiz || { questions: [] }, // Ensure `quiz` is always an object
+        };
 
-        console.log(assignment)
-
+        // Create and save assignment
+        const assignment = new Assignment(assignmentData);
         await assignment.save();
-        res.status(201).json({ message: "Assignment created successfully", success: true, data: assignment });
+
+        res.status(201).json({
+            message: "Assignment created successfully",
+            success: true,
+            data: assignment,
+        });
     } catch (error) {
-        console.error(error);
+        console.error("Error creating assignment:", error);
         res.status(500).json({ message: "Server error", success: false });
     }
 };
@@ -221,5 +255,3 @@ export const fetchAssignments = async (req, res) => {
       res.status(500).json({ message: "Server error", success: false });
     }
   };
-
-  
