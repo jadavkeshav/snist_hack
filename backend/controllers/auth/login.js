@@ -30,6 +30,8 @@ const login = ("/login", async (req, res) => {
             id: user._id,
             username: user.username,
             email: user.email,
+            role: user.role,
+            institute: user.institute
         };
 
         const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: "3d" });
@@ -46,11 +48,13 @@ const login = ("/login", async (req, res) => {
                 username: user.username,
                 email: user.email,
                 avatar: user.avatar,
-                name: user.name
+                name: user.name,
+                coins: user.coins,
+                institute: user.institute,
+                role: user.role
             },
         };
 
-        // update the user's token and token expiration
         await User.findByIdAndUpdate(user._id, { token, tokenExpiration: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) });
 
         res.status(200).cookie("token", token, options).json({ message: "User logged in successfully", success: true, data: response });
