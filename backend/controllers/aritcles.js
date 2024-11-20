@@ -102,12 +102,22 @@ export const fetchArticlesByInstId = async (req, res) => {
     try {
       const { instId } = req.body;
   
+      console.log("Received instId:", instId); // Debugging log
+  
       if (!instId) {
         return res.status(400).json({ message: "Instructor ID is required", success: false });
       }
   
-      // Fetch articles created by the instructor
-      const articles = await Article.find({ author: instId });
+      // Validate the format of instId
+      if (!mongoose.Types.ObjectId.isValid(instId)) {
+        return res.status(400).json({ message: "Invalid Instructor ID format", success: false });
+      }
+  
+      // Convert instId to ObjectId
+      const objectId = mongoose.Types.ObjectId(instId);
+  
+      // Fetch articles by author (instructor ID)
+      const articles = await Article.find({ author: objectId });
   
       if (!articles.length) {
         return res.status(404).json({ message: "No articles found for this instructor", success: false });
@@ -115,7 +125,7 @@ export const fetchArticlesByInstId = async (req, res) => {
   
       res.status(200).json({ success: true, data: articles });
     } catch (error) {
-      console.error(error);
+      console.error("Error in fetchArticlesByInstId:", error);
       res.status(500).json({ message: "Server error", success: false });
     }
   };
