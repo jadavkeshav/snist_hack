@@ -61,7 +61,7 @@ const LandingPage = () => {
 			<section className="py-20 bg-gray-100">
 				<div className="container mx-auto px-6">
 					<motion.h2 className="text-4xl font-bold text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-						Why Choose AcadeRewards?
+						Why Choose BrainQuest?
 					</motion.h2>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 						<Feature
@@ -116,7 +116,7 @@ const LandingPage = () => {
 						What Our Users Say
 					</motion.h2>
 					<motion.div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-						<p className="text-xl italic mb-4">"AcadeRewards has completely changed my approach to studying. Knowing that my hard work translates into real rewards keeps me motivated and engaged with my coursework."</p>
+						<p className="text-xl italic mb-4">"BrainQuest has completely changed my approach to studying. Knowing that my hard work translates into real rewards keeps me motivated and engaged with my coursework."</p>
 						<div className="flex items-center">
 							<img src="/placeholder.svg?height=50&width=50" alt="Student" className="rounded-full mr-4" />
 							<div>
@@ -135,7 +135,7 @@ const LandingPage = () => {
 						Ready to Start Earning Rewards?
 					</motion.h2>
 					<motion.p className="text-xl mb-8" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }}>
-						Join AcadeRewards today and turn your academic success into amazing opportunities!
+						Join BrainQuest today and turn your academic success into amazing opportunities!
 					</motion.p>
 					<motion.button className="bg-yellow-400 text-blue-900 font-bold py-3 px-10 rounded-full text-lg hover:bg-yellow-300 transition duration-300" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} viewport={{ once: true }}>
 						<Link to="/register">Sign Up Now</Link>
